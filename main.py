@@ -1,5 +1,8 @@
-from flask import Flask
+from flask import Flask, redirect, url_for
 from flask import jsonify
+
+from markupsafe import escape
+
 app = Flask(__name__)
 
 @app.route('/')
@@ -13,6 +16,11 @@ def echo(name):
     print(f"This was placed in the url: new-{name}")
     val = {"new-name": name}
     return jsonify(val)
+
+@app.route('/user/<username>')
+def show_user_profile(username):
+    # show the user profile for that user
+    return f'User {escape(username)}'
 
 
 if __name__ == '__main__':
